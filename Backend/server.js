@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+const cors = require("cors");
+
 const employeeRoutes = require("./routes/employeeRoutes");
 
 const loggerMiddleware = require("./middleware/loggerMiddleware");
@@ -10,6 +12,7 @@ const loggerMiddleware = require("./middleware/loggerMiddleware");
 // Middleware
 
 app.use(express.json());
+app.use(cors());
 app.use(loggerMiddleware);
 
 

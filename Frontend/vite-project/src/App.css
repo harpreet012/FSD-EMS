@@ -1,0 +1,437 @@
+/* app.css — extra glass polish, loaded after index.css */
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  width: 100%;
+  padding: 18px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+
+  background: linear-gradient(
+    135deg,
+    #4338ca,
+    #7c3aed,
+    #ec4899
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  padding: 10px 18px;
+  border-radius: 12px;
+
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Active Link */
+
+.nav-links a.active {
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* =========================
+   PROFILE BUTTON
+========================= */
+
+.profile-btn {
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #ec4899,
+    #8b5cf6
+  );
+
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.profile-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .nav-links a {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    font-size: 1.7rem;
+  }
+}
+
+/* Hamburger icon button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: rgba(99, 102, 241, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 60;
+}
+
+.hamburger span {
+  width: 20px;
+  height: 2.5px;
+  background: #4f46e5;
+  border-radius: 999px;
+  margin: 0 auto;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile dropdown panel */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 16px;
+    left: 16px;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 16px 40px rgba(31, 38, 60, 0.18);
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .nav-links.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .nav-links li a,
+  .nav-links li button {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-align: left;
+  }
+
+  .nav-links li a:hover,
+  .nav-links li button:hover {
+    background: rgba(99, 102, 241, 0.1);
+  }
+}
+
+
+
+.app-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(99, 102, 241, 0.16);
+  color: #4f46e5;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.05s backwards;
+}
+
+/* ===== Avatar + name row (optional markup addition inside .card) =====
+   <div class="name-row">
+     <div class="avatar">HJ</div>
+     <h3>Harpreet Jakhar</h3>
+   </div>
+*/
+
+.card .name-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.card .name-row h3 {
+  margin-bottom: 0;
+}
+
+.card .avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+/* ===== Department pill (wrap "Department: X" value in <span className="dept-pill">) ===== */
+
+.dept-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.12);
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ===== Salary tag (wrap salary value in <span className="salary-tag">) ===== */
+
+.salary-tag {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.14);
+  color: #047857;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+/* ===== Empty state ===== */
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--glass, rgba(255, 255, 255, 0.45));
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-radius: 22px;
+  border: 1px dashed rgba(99, 102, 241, 0.3);
+  color: #707a8e;
+  animation: fadeIn 0.4s ease;
+}
+
+.empty-state h3 {
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* ===== Skeleton loading card (optional, for async fetch states) ===== */
+
+.skeleton-card {
+  background: linear-gradient(90deg, rgba(255,255,255,0.35) 25%, rgba(255,255,255,0.55) 37%, rgba(255,255,255,0.35) 63%);
+  background-size: 400% 100%;
+  backdrop-filter: blur(14px);
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 22px;
+  height: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== Smooth enter/exit (for add/remove transitions if using a transition group) ===== */
+
+.card-enter {
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card-exit {
+  opacity: 1;
+}
+
+.card-exit-active {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* ===== Custom scrollbar to match glass theme ===== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.4);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
+}
+
+/* ===== Responsive tweaks specific to App layout ===== */
+
+@media (max-width: 768px) {
+  .badge {
+    font-size: 0.68rem;
+  }
+
+  .card .avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+  }
+}

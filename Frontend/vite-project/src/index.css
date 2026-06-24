@@ -1,0 +1,452 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-1: #c7d2f0;
+  --bg-2: #f5d0e0;
+  --bg-3: #c9f0e3;
+  --glass: rgba(255, 255, 255, 0.45);
+  --glass-strong: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --text-primary: #1e2330;
+  --text-secondary: #4b5468;
+  --text-muted: #707a8e;
+  --accent: #6366f1;
+  --accent-2: #8b5cf6;
+  --warning: #f59e0b;
+  --warning-2: #fb923c;
+  --danger: #f43f5e;
+  --danger-2: #fb7185;
+  --success: #10b981;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: "Plus Jakarta Sans", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Floating ambient blobs for glass depth */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.55;
+  animation: float 14s ease-in-out infinite;
+}
+
+body::before {
+  width: 420px;
+  height: 420px;
+  background: #818cf8;
+  top: -120px;
+  left: -100px;
+}
+
+body::after {
+  width: 380px;
+  height: 380px;
+  background: #f472b6;
+  bottom: -100px;
+  right: -80px;
+  animation-delay: -7s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.08); }
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 48px 24px 80px;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.6s var(--ease);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-family: "Sora", "Plus Jakarta Sans", sans-serif;
+  background: linear-gradient(135deg, #312e81 0%, #6366f1 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: slideDown 0.6s var(--ease);
+}
+
+h3 {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-family: "Sora", "Plus Jakarta Sans", sans-serif;
+}
+
+/* ===== Stats / total count line ===== */
+
+.stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  animation: slideUp 0.5s var(--ease) 0.1s backwards;
+}
+
+.stat-card {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  padding: 18px 24px;
+  border-radius: var(--radius-md);
+  min-width: 180px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.18);
+}
+
+.stat-card h4 {
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card p {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* Plain text count fallback, e.g. <p>Total Employees: 3</p> */
+.container > p {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  animation: slideUp 0.5s var(--ease) 0.1s backwards;
+}
+
+/* ===== Search + Filter ===== */
+
+.controls {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  animation: slideUp 0.5s var(--ease) 0.15s backwards;
+}
+
+.controls input,
+.controls select {
+  padding: 14px 18px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  color: var(--text-primary);
+  box-shadow: 0 6px 20px rgba(31, 38, 60, 0.06);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.controls input::placeholder {
+  color: var(--text-muted);
+}
+
+.controls input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.controls select {
+  cursor: pointer;
+  min-width: 140px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234b5468' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+.controls input:focus,
+.controls select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+  background: var(--glass-strong);
+}
+
+/* ===== Form ===== */
+
+.form {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  padding: 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 36px rgba(31, 38, 60, 0.08);
+  animation: slideUp 0.5s var(--ease) 0.2s backwards;
+}
+
+.form input {
+  flex: 1;
+  min-width: 220px;
+  padding: 15px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--text-primary);
+  transition: 0.25s var(--ease);
+}
+
+.form input::placeholder {
+  color: var(--text-muted);
+}
+
+.form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.form button {
+  padding: 15px 30px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+}
+
+.form button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
+}
+
+.form button:active {
+  transform: translateY(0);
+}
+
+/* ===== Employee Grid ===== */
+
+.employee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* ===== Card (glassmorphism) ===== */
+
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 34px rgba(31, 38, 60, 0.1);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+  animation: cardIn 0.45s var(--ease) backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 60%);
+  pointer-events: none;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(31, 38, 60, 0.16);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card h3 {
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.card p {
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.card p strong {
+  color: var(--text-primary);
+}
+
+/* ===== Buttons ===== */
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.edit-btn,
+.delete-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, var(--warning), var(--warning-2));
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.45);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, var(--danger), var(--danger-2));
+  box-shadow: 0 6px 18px rgba(244, 63, 94, 0.35);
+}
+
+.delete-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(244, 63, 94, 0.45);
+}
+
+.edit-btn:active,
+.delete-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Animations ===== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.employee-grid .card:nth-child(1) { animation-delay: 0.05s; }
+.employee-grid .card:nth-child(2) { animation-delay: 0.1s; }
+.employee-grid .card:nth-child(3) { animation-delay: 0.15s; }
+.employee-grid .card:nth-child(4) { animation-delay: 0.2s; }
+.employee-grid .card:nth-child(5) { animation-delay: 0.25s; }
+.employee-grid .card:nth-child(6) { animation-delay: 0.3s; }
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .form,
+  .controls {
+    flex-direction: column;
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .container {
+    padding: 32px 16px 60px;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+}
