@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 
 function App() {
-  const API_URL = "http://localhost:5100/employees";
+  const API_URL = "https://fsd-ems-backend.onrender.com/employees";
 
   const [employees, setEmployees] = useState([]);
 
