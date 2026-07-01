@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 
 function App() {
+  const API_URL = "http://localhost:5100/employees";
+
   const [employees, setEmployees] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -10,20 +12,27 @@ function App() {
     salary: "",
   });
 
+  const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("All");
-  const [editingId, setEditingId] = useState(null);
 
-  const API_URL = "https://ems-backend-zuti.onrender.com/employees";
+  // =============================
+  // GET EMPLOYEES
+  // =============================
 
-  // Fetch Employees
   const getEmployees = async () => {
     try {
       const response = await fetch(API_URL);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch employees");
+      }
+
       const data = await response.json();
+
       setEmployees(data);
-    } catch (error) {
-      console.error("Error fetching employees:", error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -31,7 +40,10 @@ function App() {
     getEmployees();
   }, []);
 
-  // Handle Input
+  // =============================
+  // HANDLE INPUT
+  // =============================
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -39,23 +51,26 @@ function App() {
     });
   };
 
-  // Add / Update Employee
+  // =============================
+  // ADD / UPDATE EMPLOYEE
+  // =============================
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      let response;
+
       if (editingId) {
-        await fetch(`${API_URL}/${editingId}`, {
+        response = await fetch(`${API_URL}/${editingId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         });
-
-        setEditingId(null);
       } else {
-        await fetch(API_URL, {
+        response = await fetch(API_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,32 +79,48 @@ function App() {
         });
       }
 
+      if (!response.ok) {
+        throw new Error("Request Failed");
+      }
+
       setFormData({
         name: "",
         department: "",
         salary: "",
       });
 
+      setEditingId(null);
+
       getEmployees();
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  // Delete Employee
-  const deleteEmployee = async (id) => {
+  // =============================
+  // DELETE EMPLOYEE
+  // =============================
+
+  const deleteEmployee = async (_id) => {
     try {
-      await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API_URL}/${_id}`, {
         method: "DELETE",
       });
 
+      if (!response.ok) {
+        throw new Error("Delete Failed");
+      }
+
       getEmployees();
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  // Edit Employee
+  // =============================
+  // EDIT EMPLOYEE
+  // =============================
+
   const editEmployee = (employee) => {
     setFormData({
       name: employee.name,
@@ -97,10 +128,13 @@ function App() {
       salary: employee.salary,
     });
 
-    setEditingId(employee.id);
+    setEditingId(employee._id);
   };
 
-  // Search + Filter
+  // =============================
+  // SEARCH + FILTER
+  // =============================
+
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearch = employee.name
       .toLowerCase()
@@ -125,9 +159,10 @@ function App() {
       <div className="container">
         <h1>Employee Management System</h1>
 
-        <h3>Total Employees: {filteredEmployees.length}</h3>
+        <h3>Total Employees : {filteredEmployees.length}</h3>
 
-        {/* Search + Filter */}
+        {/* Search */}
+
         <div className="controls">
           <input
             type="text"
@@ -143,17 +178,16 @@ function App() {
             }
           >
             {departments.map((dept, index) => (
-              <option key={index} value={dept}>
-                {dept}
-              </option>
+              <option key={index}>{dept}</option>
             ))}
           </select>
         </div>
 
         {/* Form */}
+
         <form
-          onSubmit={handleSubmit}
           className="form"
+          onSubmit={handleSubmit}
         >
           <input
             type="text"
@@ -189,21 +223,22 @@ function App() {
           </button>
         </form>
 
-        {/* Employee Cards */}
+        {/* Cards */}
+
         <div className="employee-grid">
           {filteredEmployees.map((employee) => (
             <div
-              key={employee.id}
+              key={employee._id}
               className="card"
             >
               <h3>{employee.name}</h3>
 
               <p>
-                Department: {employee.department}
+                Department : {employee.department}
               </p>
 
               <p>
-                Salary: ₹{employee.salary}
+                Salary : ₹{employee.salary}
               </p>
 
               <div className="btn-group">
@@ -224,7 +259,7 @@ function App() {
                         "Delete this employee?"
                       )
                     ) {
-                      deleteEmployee(employee.id);
+                      deleteEmployee(employee._id);
                     }
                   }}
                 >
